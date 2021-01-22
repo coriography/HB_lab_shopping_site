@@ -5,8 +5,8 @@ put melons in a shopping cart.
 
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
-
-from flask import Flask, render_template, redirect, flash
+#task 3: import session
+from flask import Flask, session, render_template, redirect, flash
 import jinja2
 
 import melons
@@ -49,8 +49,8 @@ def show_melon(melon_id):
 
     Show all info about a melon. Also, provide a button to buy that melon.
     """
-
-    melon = melons.get_by_id("meli")
+    # task 2: change argument for get_by_id so it routes to individual melon pages
+    melon = melons.get_by_id(melon_id)
     print(melon)
     return render_template("melon_details.html",
                            display_melon=melon)
@@ -79,6 +79,26 @@ def show_shopping_cart():
     # been added to the session
 
     return render_template("cart.html")
+
+# # server.py
+# @app.route('/session-basics/set')
+# def set_session():
+#     """Set value for session['fav_number']."""
+
+#     session['fav_number'] = 64 #like a dictionary!!!
+
+#     # return render_template('basic-set-session.html')
+
+# # server.py
+# @app.route('/session-basics/get')
+# def get_session():
+#     """Get values out of the session."""
+
+#     fav_num = session['fav_number']
+
+#     return render_template('basic-get-session.html',
+#                            fav_num=fav_num)
+
 
 
 @app.route("/add_to_cart/<melon_id>")
@@ -144,6 +164,8 @@ def checkout():
 
     flash("Sorry! Checkout will be implemented in a future version.")
     return redirect("/melons")
+
+
 
 
 if __name__ == "__main__":
