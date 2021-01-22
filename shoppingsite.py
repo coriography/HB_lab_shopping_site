@@ -119,8 +119,13 @@ def add_to_cart(melon_id):
     # - increment the count for that melon id by 1
     # - flash a success message
     # - redirect the user to the cart page
+    if "cart" not in session:
+        session["cart"] = {}
+    
+    session["cart"][melon_id] = session["cart"].get(melon_id, 0) + 1
+    flash("Your melon has been added to the cart.")
 
-    return "Oops! This needs to be implemented!"
+    return redirect("/cart")
 
 
 @app.route("/login", methods=["GET"])
