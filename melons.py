@@ -6,7 +6,6 @@ melon by id.
 It reads melon data in from a text file.
 """
 
-
 class Melon(object):
     """An Ubermelon Melon type."""
 

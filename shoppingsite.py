@@ -71,33 +71,31 @@ def show_shopping_cart():
     #    - get the corresponding Melon object
     #    - compute the total cost for that type of melon
     #    - add this to the order total
-    #    - add quantity and total cost as attributes on the Melon object
+    # !!  - add quantity and total cost as attributes on the Melon object
     #    - add the Melon object to the list created above
     # - pass the total order cost and the list of Melon objects to the template
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    return render_template("cart.html")
+    order_total = 0
+    melon_list = [] #this list will hold melon objects + variable for total cost of order
 
-# # server.py
-# @app.route('/session-basics/set')
-# def set_session():
-#     """Set value for session['fav_number']."""
+    if "cart" in session:
+        for melon_id in session["cart"]:
+            melon = melons.get_by_id(melon_id)
+            order_total += melon.price
+            quantity = session["cart"][melon_id]
+            total_per_melon = melon.price * quantity
+            melon_list.append(melon)
+    else:
+        flash("Sorry! Nothing is in your cart!")
 
-#     session['fav_number'] = 64 #like a dictionary!!!
+    print("*****session****", session)
+    print("***melon_list****", melon_list)
+    # setattr(obj.a, 
 
-#     # return render_template('basic-set-session.html')
-
-# # server.py
-# @app.route('/session-basics/get')
-# def get_session():
-#     """Get values out of the session."""
-
-#     fav_num = session['fav_number']
-
-#     return render_template('basic-get-session.html',
-#                            fav_num=fav_num)
+    return render_template("cart.html", melon_list=melon_list, order_total=order_total)
 
 
 
